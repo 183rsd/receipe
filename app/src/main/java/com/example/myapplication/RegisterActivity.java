@@ -3,7 +3,9 @@ package com.example.myapplication;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,14 +19,17 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -35,7 +40,8 @@ public class RegisterActivity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private Button btn_register, btn_check, btn_cancle_regi;
     private AlertDialog dialog;
-    private boolean validate = false;
+    private boolean validate = false; // 아이디 중복확인
+    ArrayList<String> id_list = new ArrayList<String>(); // 아이디를 담을 리스트
 
     private final String TAG = getClass().getSimpleName();
     private final String BASE_URL = "https://restserver-lzssy.run.goorm.io";
@@ -50,59 +56,21 @@ public class RegisterActivity extends AppCompatActivity {
         radioGroup = findViewById(R.id.rg_group);
         et_age = findViewById(R.id.et_age);
 
+        btn_register = findViewById(R.id.btn_register);
 
-        // 아이디 중복 체크
-        btn_check = findViewById(R.id.btn_check);
-        btn_check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String user_id = et_id.getText().toString();
-                if(validate){
-                    return; // 검증완료
-                }
-                if(user_id.equals("")){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                    dialog = builder.setMessage("아이디를 입력하세요.").setPositiveButton("확인",null).create();
-                    dialog.show();
-                    return;
-                }
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try{
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean success = jsonObject.getBoolean("success");
-
-                            if(success){
-                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                                dialog = builder.setMessage("사용할 수 있는 아이디입니다.").setPositiveButton("확인",null).create();
-                                dialog.show();
-                                et_id.setEnabled(false); // 아이디값 고정
-                                validate = true;
-                                btn_check.setBackgroundColor(getResources().getColor(R.color.colorGray));
-                            }
-                            else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                                dialog = builder.setMessage("이미 존재하는 아이디입니다.").setNegativeButton("확인", null).create();
-                                dialog.show();
-                            }
-                        } catch (JSONException e){
-                            e.printStackTrace();
-                        }
-                    }
-                };
-                VaildateRequest validateRequest = new VaildateRequest(user_id, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
-                queue.add(validateRequest);
-            }
-        });
 
         initMyAPI(BASE_URL);
         // 회원가입 버튼 클릭 시 수행
-        btn_register = findViewById(R.id.btn_register);
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //한 칸이라도 입력 안했을 경우 ( 성별 제외 )
+                if (et_id.getText().toString().equals("") || et_pass.getText().toString().equals("") || et_age.getText().toString().equals("")) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    dialog = builder.setMessage("모두 입력해주세요.").setNegativeButton("확인", null).create();
+                    dialog.show();
+                    return;
+                }
 
                 loginData data = new loginData();
                 // 아이디
@@ -120,6 +88,10 @@ public class RegisterActivity extends AppCompatActivity {
                     user_sex = 1;
                 data.setSex(user_sex);
 
+
+
+
+
                 Call<loginData> registerCall = mMyAPI.post_sign(data);
                 registerCall.enqueue(new Callback<loginData>() {
                     @Override
@@ -130,15 +102,20 @@ public class RegisterActivity extends AppCompatActivity {
                             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                             startActivity(intent);
                         } else{
-                            Log.d(TAG,"Status Code : " + response.code());
-                            Log.d(TAG,response.errorBody().toString());
-                            Log.d(TAG,call.request().body().toString());
+                            AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                            dialog = builder.setMessage("이미 사용 중인 아이디입니다.").setPositiveButton("확인",null).create();
+                            dialog.show();
+                            return;
                         }
                     }
 
                     @Override
                     public void onFailure(Call<loginData> call, Throwable t) {
                         Log.d(TAG,"Fail msg : " + t.getMessage());
+                        AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                        dialog = builder.setMessage("네트워크 오류").setPositiveButton("확인",null).create();
+                        dialog.show();
+                        return;
                     }
                 });
             }

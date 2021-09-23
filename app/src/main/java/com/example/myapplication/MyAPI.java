@@ -12,12 +12,13 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface MyAPI {
     @POST("/users/login")
     Call<loginResponse> post_posts(@Body loginData post);
 
-    @POST("/users/sign")
+    @POST("/users/sign2")
     Call<loginData> post_sign(@Body loginData post);
 
     @FormUrlEncoded
@@ -27,8 +28,9 @@ public interface MyAPI {
     @DELETE("/users/{pk}")
     Call<loginData> delete_posts(@Path("pk") int pk);
 
+
     @GET("/users/sign")
-    Call<List<loginData>> get_posts();
+    Call<loginData> get_user_id(@Query("user_id") String user_id);
 
     @GET("/users/{pk}")
     Call<List<loginData>> get_post_pk(@Path("pk") int pk);

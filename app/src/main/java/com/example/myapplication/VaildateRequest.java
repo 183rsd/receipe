@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class VaildateRequest extends StringRequest {
     // 서버 url 설정
-    final static private String URL = "https://restserver-lzssy.run.goorm.io/users/signup";
+    final static private String URL = "https://restserver-lzssy.run.goorm.io/users/sign";
     private final Map<String, String> map;
 
     public VaildateRequest(String user_id, Response.Listener<String> listener){

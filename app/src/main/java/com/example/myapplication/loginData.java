@@ -31,6 +31,9 @@ public class loginData {
     public loginData(){
 
     }
+    public loginData(String user_id){
+        this.user_id = user_id;
+    }
     public loginData(String user_id, String password){
         this.user_id = user_id;
         this.password = password;
