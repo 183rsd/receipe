@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ListFragment">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="음식 리스트"
+        android:textSize="50dp"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:backgroundTint="#5C8033"
+        android:fontFamily="@font/regular"
+        android:textColor="@color/black"/>
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"/>
+        android:scrollbars="vertical"
+        android:scrollbarFadeDuration="0"
+        android:background="@drawable/food_list"/>
 
-</FrameLayout>
+</LinearLayout>

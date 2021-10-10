@@ -7,7 +7,7 @@
         name="files"
         path="."/>
     <external-path
-        name="exteranl"
+        name="storage/emulated"
         path="."/>
     <external-files-path
         name="external_files"

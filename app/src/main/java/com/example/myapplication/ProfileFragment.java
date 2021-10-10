@@ -57,7 +57,7 @@ public class ProfileFragment extends Fragment {
 
         // 텍스트뷰
         tv_id = v.findViewById(R.id.profile_id);
-        tv_pw = v.findViewById(R.id.profile_password);
+
         tv_age = v.findViewById(R.id.profile_age);
         tv_sex = v.findViewById(R.id.profile_sex);
 
@@ -81,16 +81,16 @@ public class ProfileFragment extends Fragment {
 
         profile_sex_int = bundle.getInt("user_sex",1000);
         if(profile_sex_int == 0)
-            profile_sex = "남";
+            profile_sex = "남성";
         else if (profile_sex_int == 1)
-            profile_sex = "여";
+            profile_sex = "여성";
         else
             profile_sex = "알수없음";
 
-        tv_id.setText("아이디 : " + profile_id);
-        tv_pw.setText("비밀번호 : " + profile_pw);
-        tv_age.setText("나이 : " + profile_age);
-        tv_sex.setText("성별 : " + profile_sex);
+        tv_id.setText(profile_id+"님");
+
+        tv_age.setText(profile_age+"세");
+        tv_sex.setText(profile_sex);
 
 
         btn_update.setOnClickListener(new View.OnClickListener() {

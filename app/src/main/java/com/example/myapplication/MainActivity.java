@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<loginResponse> call, Throwable t) {
                         Log.d(TAG,"Fail msg : " + t.getMessage());
-                        Toast.makeText(MainActivity.this,"아이디 또는 비밀번호가 올바르지 않습니다.",Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this,"서버 오류",Toast.LENGTH_LONG).show();
                     }
                 });
             }

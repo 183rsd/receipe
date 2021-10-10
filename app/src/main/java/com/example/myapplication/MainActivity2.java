@@ -25,7 +25,8 @@ public class MainActivity2 extends AppCompatActivity  {
     private BottomNavigationView mBottomNV;
     public String success_user_id, success_password;
     public int success_id, success_age, success_sex;
-    Bundle bundle = new Bundle();
+    Bundle bundle = new Bundle(); // 프로필로 가는 번들
+    Bundle bundle_pic = new Bundle(); // 레시피로 가는 번들
     private BackPressHandler backPressHandler = new BackPressHandler(this);
 
 
@@ -47,6 +48,9 @@ public class MainActivity2 extends AppCompatActivity  {
         bundle.putString("user_pw", success_password);
         bundle.putInt("user_age",success_age);
         bundle.putInt("user_sex",success_sex);
+
+
+        bundle_pic.putInt("id",success_id);
 
 
 
@@ -75,6 +79,7 @@ public class MainActivity2 extends AppCompatActivity  {
         if(fragment == null){
             if(id == R.id.menu_home){
                 fragment = new HomeFragment();
+                fragment.setArguments(bundle_pic);
             } else if (id == R.id.menu_profile){
                 fragment = new ProfileFragment();
                 fragment.setArguments(bundle);

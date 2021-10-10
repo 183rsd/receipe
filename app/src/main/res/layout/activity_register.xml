@@ -1,110 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity"
-    android:background="#DFBABA">
+    android:orientation="vertical"
+    android:background="#F5F8F6"
+    tools:context=".RegisterActivity">
+
     <TextView
         android:id="@+id/textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="회원가입"
+        android:fontFamily="@font/regular"
+        android:textColor="@color/black"
         android:textSize="50sp"
-        android:layout_marginBottom="65dp"
-        app:layout_constraintBottom_toTopOf="@+id/et_id"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:layout_gravity="center|center_horizontal|center_vertical"
+        android:layout_marginTop="50dp"/>
 
 
     <EditText
         android:id="@+id/et_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="2dp"
-        android:layout_marginRight="2dp"
-        android:layout_marginBottom="24dp"
+        android:layout_gravity="center|center_horizontal|center_vertical"
         android:ems="10"
         android:hint="아이디"
+        android:fontFamily="@font/regular"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/et_pass"
-        app:layout_constraintEnd_toEndOf="@+id/btn_check"/>
-
-    <Button
-        android:id="@+id/btn_check"
-        android:layout_width="70dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="97dp"
-        android:layout_marginRight="97dp"
-        android:text="확인"
-        app:layout_constraintBaseline_toBaselineOf="@+id/et_id"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_marginTop="100dp"
+         />
 
 
     <EditText
         android:id="@+id/et_pass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_gravity="center|center_horizontal|center_vertical"
         android:ems="10"
         android:hint="비밀번호"
+        android:fontFamily="@font/regular"
         android:inputType="textPassword"
-        app:layout_constraintStart_toStartOf="@+id/et_id"
-        app:layout_constraintBottom_toTopOf="@+id/et_age" />
+        android:layout_marginTop="20dp"/>
 
     <EditText
         android:id="@+id/et_age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/et_pass"
-        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/regular"
+        android:layout_gravity="center|center_horizontal|center_vertical"
         android:ems="10"
         android:hint="나이"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="@+id/et_pass"
-        app:layout_constraintBottom_toTopOf="@+id/rg_group" />
+        android:layout_marginTop="20dp" />
 
     <RadioGroup
         android:id="@+id/rg_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="267dp"
+        android:layout_gravity="center|center_horizontal|center_vertical"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/et_age">
+        android:layout_marginTop="20dp">
 
         <RadioButton
             android:id="@+id/rg_btn1"
             android:text="남"
+            android:fontFamily="@font/regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <RadioButton
             android:id="@+id/rg_btn2"
             android:text="여"
+            android:fontFamily="@font/regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </RadioGroup>
-    <Button
-        android:id="@+id/btn_cancle_regi"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginTop="71dp"
-        android:text="취소"
-        app:layout_constraintStart_toEndOf="@+id/btn_register"
-        app:layout_constraintTop_toBottomOf="@+id/rg_group"/>
+        android:layout_gravity="center|center_horizontal|center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_cancle_regi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/solid_button"
+
+            android:fontFamily="@font/regular"
+            android:text="취소"
+            />
 
 
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:layout_marginLeft="96dp"
-        android:text="가입"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btn_cancle_regi"
-        app:layout_constraintStart_toStartOf="parent"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/solid_button"
+            android:backgroundTint="#8BC34A"
+            android:fontFamily="@font/regular"
+            android:text="가입"
+            android:layout_marginLeft="30dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

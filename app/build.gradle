@@ -13,6 +13,7 @@ android {
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -38,6 +39,7 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'com.android.support:multidex:1.0.3'
 
     // 메테리얼 디자인
     implementation 'com.google.android.material:material:1.1.0'
@@ -79,6 +81,15 @@ dependencies {
     // define any required OkHttp artifacts without version
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
+
+    // 로딩 애니메이션
+    implementation 'com.airbnb.android:lottie:3.5.0'
+
+    // 이미지 회전
+    implementation 'androidx.exifinterface:exifinterface:1.1.0'
+
+    // 이미지 회전 glide
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
 }
 repositories {
     mavenCentral()
