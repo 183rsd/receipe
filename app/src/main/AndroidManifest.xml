@@ -28,11 +28,11 @@
         <activity android:name=".PostActivity" />
         <activity android:name=".MainActivity2" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoadingActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".List_result_Activity" />
         <activity android:name=".ResultActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".LoadingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -118,53 +118,53 @@ public class ResultActivity extends AppCompatActivity {
 
 
 
-
-        btn_pic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                File send_file = new File(filePath);
-                InputStream inputStream = null;
-                try{
-                    inputStream = ctx.getContentResolver().openInputStream(uri);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                Bitmap bitmap2 = BitmapFactory.decodeStream(inputStream);
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                bitmap2.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
-                RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray());
-                MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("pic_img",send_file.getName(),requestBody);
-
-
-
-
-                Call<pictureData> pic_call = mMyAPI.post_picture(map, uploadFile);
-                pic_call.enqueue(new Callback<pictureData>() {
-                    @Override
-                    public void onResponse(Call<pictureData> call, Response<pictureData> response) {
-                        if(response.isSuccessful()){
-                            Toast.makeText(ResultActivity.this,"post 성공",Toast.LENGTH_LONG).show();
-                            Log.d(TAG,"Status Code : " + response.code());
-                        }
-                        else{
-                            Toast.makeText(ResultActivity.this,"post 실패",Toast.LENGTH_LONG).show();
-                            Log.d(TAG,"Status Code : " + response.code());
-                            Log.d(TAG,response.errorBody().toString());
-                            Log.d(TAG,call.request().body().toString());
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<pictureData> call, Throwable t) {
-                        Log.d(TAG,"Fail msg : " + t.getMessage());
-                        Toast.makeText(ResultActivity.this,"서버 오류",Toast.LENGTH_LONG).show();
-                    }
-                });
-
-            }
-        });
+//
+//        btn_pic.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                File send_file = new File(filePath);
+//                InputStream inputStream = null;
+//                try{
+//                    inputStream = ctx.getContentResolver().openInputStream(uri);
+//                } catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+//                Bitmap bitmap2 = BitmapFactory.decodeStream(inputStream);
+//                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//                bitmap2.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
+//                RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray());
+//                MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("pic_img",send_file.getName(),requestBody);
+//
+//
+//
+//
+//                Call<pictureData> pic_call = mMyAPI.post_picture(map, uploadFile);
+//                pic_call.enqueue(new Callback<pictureData>() {
+//                    @Override
+//                    public void onResponse(Call<pictureData> call, Response<pictureData> response) {
+//                        if(response.isSuccessful()){
+//                            Toast.makeText(ResultActivity.this,"post 성공",Toast.LENGTH_LONG).show();
+//                            Log.d(TAG,"Status Code : " + response.code());
+//                        }
+//                        else{
+//                            Toast.makeText(ResultActivity.this,"post 실패",Toast.LENGTH_LONG).show();
+//                            Log.d(TAG,"Status Code : " + response.code());
+//                            Log.d(TAG,response.errorBody().toString());
+//                            Log.d(TAG,call.request().body().toString());
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<pictureData> call, Throwable t) {
+//                        Log.d(TAG,"Fail msg : " + t.getMessage());
+//                        Toast.makeText(ResultActivity.this,"서버 오류",Toast.LENGTH_LONG).show();
+//                    }
+//                });
+//
+//            }
+//        });
 
 
 

@@ -1,39 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".RecipeActivity">
-
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/tv_rec_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:text="레시피\n\n텍스트\nor\n웹뷰\nor\n게시판\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+            android:text="rec_name"
+            android:textStyle="bold"
             android:textSize="30sp"
-            android:background="#86E3EF"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:layout_gravity="center_vertical"/>
+            android:textColor="@color/black"
+            android:fontFamily="@font/regular"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"/>
 
+        <TextView
+            android:id="@+id/tv_rec_ingre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="rec_ingre"
+            android:textColor="@color/colorGray"
+            android:fontFamily="@font/regular"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:layout_below="@id/tv_rec_name"/>
 
-    </ScrollView>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/tv_rec_ingre"
+            android:background="@drawable/food_list"
+            android:backgroundTint="#D6D1A1"
+            android:layout_margin="20dp">
 
+            <TextView
+                android:id="@+id/tv_rec_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/black"
+                android:text="rec_content"
+                android:textSize="20sp"
 
-    <TextView
-        android:id="@+id/tv_user_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="user_id"/>
-    <ImageView
-        android:id="@+id/iv_pic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+                android:layout_margin="30dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

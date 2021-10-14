@@ -22,15 +22,6 @@
         android:layout_centerInParent="true"
         android:src="@drawable/food_upload"/>
 
-
-
-    <TextView
-        android:id="@+id/uri_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="uri"
-        android:layout_below="@+id/img_select_photo"
-        android:textSize="20sp"/>
 <!--    <androidx.appcompat.widget.AppCompatButton-->
 <!--        android:id="@+id/btn_go_recipe"-->
 <!--        android:layout_width="wrap_content"-->

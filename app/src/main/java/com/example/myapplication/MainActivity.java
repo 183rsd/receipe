@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                             String password = result.getPassword();
                             int age = result.getAge();
                             int sex = result.getSex();
-                            Toast.makeText(MainActivity.this,user_id +"님 환영합니다.",Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this,user_id +"님 환영합니다.",Toast.LENGTH_SHORT).show();
 
                             if(autoLogin_check.isChecked()){
                                 SharedPreferences auto = getSharedPreferences("autoLogin", Activity.MODE_PRIVATE);
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                         } else{
-                            Toast.makeText(MainActivity.this,"아이디 또는 비밀번호가 올바르지 않습니다.",Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this,"아이디 또는 비밀번호가 올바르지 않습니다.",Toast.LENGTH_SHORT).show();
                             Log.d(TAG,"Status Code : " + response.code());
                             Log.d(TAG,response.errorBody().toString());
                             Log.d(TAG,call.request().body().toString());
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<loginResponse> call, Throwable t) {
                         Log.d(TAG,"Fail msg : " + t.getMessage());
-                        Toast.makeText(MainActivity.this,"서버 오류",Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this,"서버 오류",Toast.LENGTH_SHORT).show();
                     }
                 });
             }

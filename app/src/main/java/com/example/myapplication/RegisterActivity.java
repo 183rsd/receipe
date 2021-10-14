@@ -98,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onResponse(Call<loginData> call, retrofit2.Response<loginData> response) {
                         if(response.isSuccessful()){
                             Log.d(TAG, "회원가입 성공");
-                            Toast.makeText(RegisterActivity.this,"회원가입이 완료되었습니다.",Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegisterActivity.this,"회원가입이 완료되었습니다.",Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                             startActivity(intent);
                         } else{

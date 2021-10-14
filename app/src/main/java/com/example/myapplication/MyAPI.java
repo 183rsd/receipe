@@ -46,6 +46,9 @@ public interface MyAPI {
     @GET("/users/{pk}")
     Call<List<loginData>> get_post_pk(@Path("pk") int pk);
 
+    @GET("/recipe/detail/{pic_list}/")
+    Call<pictureData> get_rec_name(@Path(value = "pic_list", encoded = false) String pic_list);
+
 //    @GET("/recipe/detail/{pk}")
 
 

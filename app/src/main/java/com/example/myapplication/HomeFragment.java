@@ -28,6 +28,7 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -86,13 +87,15 @@ public class HomeFragment extends Fragment {
     Activity activity;
     FoodLoading customProgressDialog;
     private Animation anim;
-    TextView uri_text;
+
 
     // db연동
     private static final String TAG = HomeFragment.class.getSimpleName();
     // 서버 url
     private final String BASE_URL = "https://restserver-lzssy.run.goorm.io";
-    private MyAPI mMyAPI;
+    // 레시피 서버 주소는 계속 변경됨. 그때그때 수정(goorm.io에는 ai모델을 올릴 수가 없어서)
+    private final String recipe_url = "https://7a6d-210-178-44-55.ngrok.io";
+    private MyAPI mMyAPI, mMyAPI_recipe;
     private Context mContext;
 
 
@@ -110,15 +113,14 @@ public class HomeFragment extends Fragment {
         setHasOptionsMenu(true);
         tedPermission();
        initMyAPI(BASE_URL);
+       initMyAPI_recipe(recipe_url);
+
 
 //        File sdcard = Environment.getExternalStorageDirectory();
 //        file = new File(sdcard, "capture.jpg");
 
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
-//        btnCamera = v.findViewById(R.id.button_camera);
-//        btnGallery = v.findViewById(R.id.button_gallery);
-//       btn_go_recipe = v.findViewById(R.id.btn_go_recipe);
 
        // 로딩창 객체 생성
        customProgressDialog = new FoodLoading(getActivity());
@@ -133,41 +135,11 @@ public class HomeFragment extends Fragment {
            }
        });
 
-       uri_text = v.findViewById(R.id.uri_text);
 
 
         Bundle bundle_pic = getArguments(); // 메인액티비티2 에서 전달받은 번들 저장
 
         pic_user_id = bundle_pic.getInt("id",0);
-
-
-//        btnCamera.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                capture();
-//            }
-//        });
-//
-//        btnGallery.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                gallery();
-//            }
-//        });
-
-
-//       go_recipe.setOnClickListener(new View.OnClickListener() {
-//           @Override
-//           public void onClick(View view) {
-//
-//               go_recipe();
-//           }
-//       });
-
-
-
-
-
 
 
 
@@ -213,22 +185,12 @@ public class HomeFragment extends Fragment {
                 // 카메라 함수에서 photoUri는 file://형태의 uri 이 아니라, content://형태의 uri 임.
                 // 다른 앱 간에 파일 공유 시 file:// 가 아닌 content:// uri를 사용해야 함. (보안 강화)
                 photoUri = FileProvider.getUriForFile(getActivity(),"com.example.myapplication.provider",tempFile);
-//                try {
-//                    send_uri = convertContentToFileUri(mContext,photoUri);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                intent.putExtra(MediaStore.EXTRA_OUTPUT, send_uri);
+
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(intent, PICK_FROM_CAMERA);
             } else{
                 photoUri = Uri.fromFile(tempFile);
-//                try {
-//                    send_uri = convertContentToFileUri(mContext,photoUri);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-                //                intent.putExtra(MediaStore.EXTRA_OUTPUT, send_uri);
+
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(intent, PICK_FROM_CAMERA);
             }
@@ -267,11 +229,6 @@ public class HomeFragment extends Fragment {
 
     }
 
-//    public void go_recipe(){
-//
-//
-//    }
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -301,7 +258,7 @@ public class HomeFragment extends Fragment {
                                                         // https://black-jin0427.tistory.com/120
                 customProgressDialog.show();
                 filePath = UriToPath(mContext,photoUri);
-                uri_text.setText(filePath.toString());
+
                 RequestBody user_id = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(pic_user_id));
                 HashMap<String, RequestBody> map = new HashMap<>();
                 map.put("user_id",user_id);
@@ -321,29 +278,52 @@ public class HomeFragment extends Fragment {
                 MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("pic_img",send_file.getName(),requestBody);
 
 
-                Call<pictureData> pic_call = mMyAPI.post_picture(map, uploadFile);
-                pic_call.enqueue(new Callback<pictureData>() {
+                Handler mHandler = new Handler();
+                mHandler.postDelayed(new Runnable() {
                     @Override
-                    public void onResponse(Call<pictureData> call, Response<pictureData> response) {
-                        if(response.isSuccessful()){
-                            Toast.makeText(getActivity(),"post 성공",Toast.LENGTH_LONG).show();
-                            Log.d(TAG,"Status Code : " + response.code());
-                        }
-                        else{
-                            Toast.makeText(getActivity(),"post 실패",Toast.LENGTH_LONG).show();
-                            Log.d(TAG,"Status Code : " + response.code());
-                            Log.d(TAG,response.errorBody().toString());
-                            Log.d(TAG,call.request().body().toString());
+                    public void run() {
+                        Call<pictureData> pic_call = mMyAPI_recipe.post_picture(map, uploadFile);
+                        pic_call.enqueue(new Callback<pictureData>() {
+                            @Override
+                            public void onResponse(Call<pictureData> call, Response<pictureData> response) {
+                                if(response.isSuccessful()){
+                                    Toast.makeText(getActivity(),"post 성공",Toast.LENGTH_SHORT).show();
+                                    Log.d(TAG,"Status Code : " + response.code());
+                                    customProgressDialog.dismiss();
+                                    pictureData result = response.body();
+                                    int rec_no = result.getRec_no();
+                                    String rec_name = result.getRec_name();
+                                    String rec_content = result.getRec_content();
+                                    String rec_ingre = result.getRec_ingre();
 
-                        }
-                    }
+                                    Intent intent1 = new Intent(getActivity(),RecipeActivity.class);
+                                    intent1.putExtra("rec_no",rec_no);
+                                    intent1.putExtra("rec_name",rec_name);
+                                    intent1.putExtra("rec_content",rec_content);
+                                    intent1.putExtra("rec_ingre",rec_ingre);
+                                    startActivity(intent1);
 
-                    @Override
-                    public void onFailure(Call<pictureData> call, Throwable t) {
-                        Log.d(TAG,"Fail msg : " + t.getMessage());
-                        Toast.makeText(getActivity(),"서버 오류",Toast.LENGTH_LONG).show();
+                                }
+                                else{
+                                    Toast.makeText(getActivity(),"post 실패" ,Toast.LENGTH_SHORT).show();
+                                    customProgressDialog.dismiss();
+                                    Log.d(TAG,"Status Code : " + response.code());
+                                    Log.d(TAG,response.errorBody().toString());
+                                    Log.d(TAG,call.request().body().toString());
+
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<pictureData> call, Throwable t) {
+                                Log.d(TAG,"Fail msg : " + t.getMessage());
+                                Toast.makeText(getActivity(),"서버 오류",Toast.LENGTH_SHORT).show();
+                                customProgressDialog.dismiss();
+                            }
+                        });
                     }
-                });
+                }, 2500);
+
 
             }catch (Exception e){
 
@@ -355,7 +335,7 @@ public class HomeFragment extends Fragment {
             Glide.with(getActivity()).load(photoUri).into(imageView);
             customProgressDialog.show();
             filePath = getRealPathFromURI(photoUri);
-            uri_text.setText(filePath.toString());
+
             RequestBody user_id = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(pic_user_id));
             HashMap<String, RequestBody> map = new HashMap<>();
             map.put("user_id",user_id);
@@ -375,29 +355,54 @@ public class HomeFragment extends Fragment {
             MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("pic_img",send_file.getName(),requestBody);
 
 
-            Call<pictureData> pic_call = mMyAPI.post_picture(map, uploadFile);
-            pic_call.enqueue(new Callback<pictureData>() {
+            Handler mHandler = new Handler();
+            mHandler.postDelayed(new Runnable() {
                 @Override
-                public void onResponse(Call<pictureData> call, Response<pictureData> response) {
-                    if(response.isSuccessful()){
-                        Toast.makeText(getActivity(),"post 성공",Toast.LENGTH_LONG).show();
-                        Log.d(TAG,"Status Code : " + response.code());
-                    }
-                    else{
-                        Toast.makeText(getActivity(),"post 실패",Toast.LENGTH_LONG).show();
-                        Log.d(TAG,"Status Code : " + response.code());
-                        Log.d(TAG,response.errorBody().toString());
-                        Log.d(TAG,call.request().body().toString());
+                public void run() {
+                    Call<pictureData> pic_call = mMyAPI_recipe.post_picture(map, uploadFile);
+                    pic_call.enqueue(new Callback<pictureData>() {
+                        @Override
+                        public void onResponse(Call<pictureData> call, Response<pictureData> response) {
+                            if(response.isSuccessful()){
+                                customProgressDialog.dismiss();
+                                pictureData result = response.body();
+                                int rec_no = result.getRec_no();
+                                String rec_name = result.getRec_name();
+                                String rec_content = result.getRec_content();
+                                String rec_ingre = result.getRec_ingre();
 
-                    }
-                }
+                                Intent intent1 = new Intent(getActivity(),RecipeActivity.class);
+                                intent1.putExtra("rec_no",rec_no);
+                                intent1.putExtra("rec_name",rec_name);
+                                intent1.putExtra("rec_content",rec_content);
+                                intent1.putExtra("rec_ingre",rec_ingre);
+                                startActivity(intent1);
 
-                @Override
-                public void onFailure(Call<pictureData> call, Throwable t) {
-                    Log.d(TAG,"Fail msg : " + t.getMessage());
-                    Toast.makeText(getActivity(),"서버 오류",Toast.LENGTH_LONG).show();
+
+                                Toast.makeText(getActivity(),"post 성공",Toast.LENGTH_SHORT).show();
+                                Log.d(TAG,"Status Code : " + response.code());
+                            }
+                            else{
+                                Toast.makeText(getActivity(),"post 실패",Toast.LENGTH_SHORT).show();
+                                customProgressDialog.dismiss();
+                                Log.d(TAG,"Status Code : " + response.code());
+                                Log.d(TAG,response.errorBody().toString());
+                                Log.d(TAG,call.request().body().toString());
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<pictureData> call, Throwable t) {
+                            Log.d(TAG,"Fail msg : " + t.getMessage());
+                            Toast.makeText(getActivity(),"서버 오류",Toast.LENGTH_SHORT).show();
+                            customProgressDialog.dismiss();
+                        }
+                    });
                 }
-            });
+            },2500);
+
+
         }
     }
 
@@ -464,6 +469,18 @@ public class HomeFragment extends Fragment {
 
         mMyAPI = retrofit.create(MyAPI.class);
     }
+
+    private void initMyAPI_recipe(String recipe_url){
+        Log.d(TAG,"initMyAPI : " + recipe_url);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(recipe_url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        mMyAPI_recipe = retrofit.create(MyAPI.class);
+    }
+
+
 
     // 비트맵에서 uri 추출
 //    private Uri getImageUri(Context ctx, Bitmap bitmap){

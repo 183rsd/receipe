@@ -110,7 +110,7 @@ public class ProfileFragment extends Fragment {
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"로그인 화면으로 돌아갑니다.",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"로그인 화면으로 돌아갑니다.",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(),MainActivity.class);
                 startActivity(intent);
             }
@@ -135,7 +135,7 @@ public class ProfileFragment extends Fragment {
         mMyAPI = retrofit.create(MyAPI.class);
     }
 
-    public void profileUpdate(){ // 비밀번호변경 버튼 클릭시시
+    public void profileUpdate(){ // 비밀번호변경 버튼 클릭 시
        update_dialog.show();
         EditText et_now_pw = update_dialog.findViewById(R.id.et_now_pw);
         EditText et_up_pw = update_dialog.findViewById(R.id.et_update_pw);
@@ -154,7 +154,7 @@ public class ProfileFragment extends Fragment {
                         public void onResponse(Call<loginData> call, Response<loginData> response) {
                             if(response.isSuccessful()){
                                 Log.d(TAG,"비밀번호 변경 완료 " + response.code());
-                                Toast.makeText(getActivity(),"변경 완료. 변경된 비밀번호로 다시 로그인해주세요",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(),"변경 완료. 변경된 비밀번호로 다시 로그인해주세요",Toast.LENGTH_SHORT).show();
                                 et_now_pw.setText(null);
                                 et_up_pw.setText(null);
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -174,7 +174,7 @@ public class ProfileFragment extends Fragment {
                     });
                 }
                 else {
-                    Toast.makeText(getActivity(),"현재 비밀번호가 올바르지 않습니다.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),"현재 비밀번호가 올바르지 않습니다.",Toast.LENGTH_SHORT).show();
                     et_now_pw.setText(null);
                     et_up_pw.setText(null);
                 }
@@ -186,7 +186,7 @@ public class ProfileFragment extends Fragment {
         update_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"취소",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"취소",Toast.LENGTH_SHORT).show();
                 et_now_pw.setText(null);
                 et_up_pw.setText(null);
                 update_dialog.dismiss();
@@ -212,7 +212,7 @@ public class ProfileFragment extends Fragment {
                         public void onResponse(Call<loginData> call, Response<loginData> response) {
                             if (response.isSuccessful()) {
                                 Log.d(TAG, "삭제 완료");
-                                Toast.makeText(getActivity(), "삭제 완료. 로그인 화면으로 돌아갑니다.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "삭제 완료. 로그인 화면으로 돌아갑니다.", Toast.LENGTH_SHORT).show();
                                 et.setText(null);
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
                                 startActivity(intent);
@@ -231,7 +231,7 @@ public class ProfileFragment extends Fragment {
 
                 }
                 else{
-                    Toast.makeText(getActivity(), "비밀번호가 올바르지 않습니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "비밀번호가 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
                     et.setText(null);
                 }
             }
@@ -239,7 +239,7 @@ public class ProfileFragment extends Fragment {
         builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getActivity(),"취소",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"취소",Toast.LENGTH_SHORT).show();
                 et.setText(null);
             }
         });

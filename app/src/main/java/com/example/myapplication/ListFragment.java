@@ -44,9 +44,9 @@ public class ListFragment extends Fragment {
     private void getData(){
         List<String> title = Arrays.asList("갈비찜",
                 "갈비탕", "갈치조림","감자탕", "고등어조림","김밥", "김치볶음밥"
-                ,"김치찌개", "꽁치조림","닭볶음탕", "도토리묵","동태찌개", "된장찌개", "떡볶이","만둣국","매운탕","무국","미역국","북엇국","비빔밥"
+                ,"김치찌개", "김치찜", "꽁치조림","닭볶음탕", "도토리묵","동태찌개", "된장찌개", "떡볶이","만두국","매운탕","무국","미역국","북엇국","비빔밥"
                 ,"삼계탕","새우볶음밥","설렁탕","소세지볶음","수제비","순두부찌개","시래기국","알밥","열무국수","육개장","잔치국수","잡채","장조림"
-                ,"제육볶음","쭈꾸미볶음","찜닭","코다리조림","콩국수","파전","해물찜");
+                ,"제육볶음","주꾸미볶음","찜닭","코다리조림","콩국수","파전","해물찜");
         List<Integer> img = Arrays.asList(
                 R.drawable.f1,
                 R.drawable.f2,
@@ -56,6 +56,7 @@ public class ListFragment extends Fragment {
                 R.drawable.f6,
                 R.drawable.f7,
                 R.drawable.f8,
+                R.drawable.f77, //김치찜
                 R.drawable.f9,
                 R.drawable.f10,
                 R.drawable.f11,
