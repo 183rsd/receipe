@@ -61,21 +61,23 @@ public class RegisterActivity_board extends AppCompatActivity {
     Button reg_button, btn_register_board;
     ImageView imageView;
     // 유저아이디 변수
-    String user_id = "";
+    int user_id;
+//    String user_id = "";
     private static final int PICK_FROM_ALBUM = 1;
     private File tempFile;
     String filePath;
     MultipartBody.Part uploadFile;
     File send_file;
     HashMap<String, RequestBody> map;
+    Uri photoUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_board);
-        // Boardfragment 에서 넘긴 userid 를 변수로 받음
+        // Boardfragment 에서 넘긴 user_id 를 변수로 받음
         Intent intent = getIntent();
-        user_id = intent.getStringExtra("user_id");
+        user_id = intent.getIntExtra("id",0);
         // 컴포넌트 초기화
         title_et = findViewById(R.id.title_et);
         content_et = findViewById(R.id.content_et);
@@ -105,7 +107,7 @@ public class RegisterActivity_board extends AppCompatActivity {
                 String content = content_et.getText().toString();
                 String title = title_et.getText().toString();
 
-                RequestBody post_user_id = RequestBody.create(MediaType.parse("text/plain"),user_id);
+                RequestBody post_user_id = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(user_id));
                 RequestBody post_content = RequestBody.create(MediaType.parse("text/plain"),content);
                 RequestBody post_title = RequestBody.create(MediaType.parse("text/plain"),title);
                 map = new HashMap<>();
@@ -113,32 +115,53 @@ public class RegisterActivity_board extends AppCompatActivity {
                 map.put("post_content",post_content);
                 map.put("post_title",post_title);
 
+                filePath = getRealPathFromURI(photoUri);
 
-                Call<contentData> postContent = mMyAPI.post_list(map,uploadFile);
-                postContent.enqueue(new Callback<contentData>() {
-                    @Override
-                    public void onResponse(Call<contentData> call, retrofit2.Response<contentData> response) {
-                        if(response.isSuccessful()){
+                send_file = new File(filePath);
+                InputStream inputStream = null;
+                try{
+                    inputStream = getContentResolver().openInputStream(photoUri);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                Bitmap bitmap2 = BitmapFactory.decodeStream(inputStream);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap2.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
+                RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray());
+                uploadFile = MultipartBody.Part.createFormData("pic_img",send_file.getName(),requestBody);
 
-                            Log.d(TAG, "게시글 등록성공");
-                            Toast.makeText(RegisterActivity_board.this, "게시글이 등록되었습니다.",Toast.LENGTH_SHORT).show();
+
+                if(uploadFile!=null){
+                    Call<postcreateData> postContent = mMyAPI.post_list(map, uploadFile);
+                    postContent.enqueue(new Callback<postcreateData>() {
+                        @Override
+                        public void onResponse(Call<postcreateData> call, Response<postcreateData> response) {
+                            if(response.isSuccessful()){
+
+                                Log.d(TAG, "게시글 등록성공");
+                                Toast.makeText(RegisterActivity_board.this, "게시글이 등록되었습니다.",Toast.LENGTH_SHORT).show();
 
 
-                            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                            // 프래그먼트매니저를 통해 사용
-                            Fragment fragment1= new Fragment(); // 객체 생성
-                            transaction.replace(R.id.fragment_main, fragment1); //layout, 교체될 layout
-                            transaction.commit(); //commit으로 저장 하지 않으면 화면 전환이 되지 않음
+                                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                                // 프래그먼트매니저를 통해 사용
+                                Fragment fragment1= new Fragment(); // 객체 생성
+                                transaction.replace(R.id.fragment_main, fragment1); //layout, 교체될 layout
+                                transaction.commit(); //commit으로 저장 하지 않으면 화면 전환이 되지 않음
+                            }
+                            else{
+                                Toast.makeText(RegisterActivity_board.this,response.message(),Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        else{
-                            Toast.makeText(RegisterActivity_board.this,"notSuccessful",Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onFailure(Call<postcreateData> call, Throwable t) {
+                            Toast.makeText(RegisterActivity_board.this,"onFailure",Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    @Override
-                    public void onFailure(Call<contentData> call, Throwable t) {
-                        Toast.makeText(RegisterActivity_board.this,"onFailure",Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    });
+                }
+                else{
+                    Toast.makeText(RegisterActivity_board.this, "사진등록안됨.",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -166,25 +189,13 @@ public class RegisterActivity_board extends AppCompatActivity {
         if (requestCode == PICK_FROM_ALBUM) {
 
             try{ // 갤러리에서 가져온 사진(크롭x) uri는 UriToPath함수를 통해 filePath 추출 (상대경로)
-                Uri photoUri = data.getData();    // 다른 앱 간에 파일 공유 시 file:// 가 아닌 content:// uri를 사용해야 함. (보안 강화)
+                photoUri = data.getData();    // 다른 앱 간에 파일 공유 시 file:// 가 아닌 content:// uri를 사용해야 함. (보안 강화)
                 Glide.with(this).load(photoUri).into(imageView);
 //                uri_text.setText(photoUri.toString()); // uri가 content://로 시작함. 이걸 file://로 바꿔서 filePath로?
                 // https://black-jin0427.tistory.com/120
 
-                filePath = UriToPath(mContext,photoUri);
+//                filePath = UriToPath(mContext,photoUri);
 
-                send_file = new File(filePath);
-                InputStream inputStream = null;
-                try{
-                    inputStream = mContext.getContentResolver().openInputStream(photoUri);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                Bitmap bitmap2 = BitmapFactory.decodeStream(inputStream);
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                bitmap2.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
-                RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray());
-                uploadFile = MultipartBody.Part.createFormData("pic_img",send_file.getName(),requestBody);
 
             }catch (Exception e){
 
@@ -221,5 +232,17 @@ public class RegisterActivity_board extends AppCompatActivity {
         cursor.close();
         return path;
     }
+    private String getRealPathFromURI(Uri contentUri) {
+        int column_index=0;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if(cursor.moveToFirst()){
+            column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        }
+
+        return cursor.getString(column_index);
+    }
+
+
 }
 

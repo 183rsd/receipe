@@ -47,6 +47,7 @@ public class MainActivity2 extends AppCompatActivity  {
 
         bundle_pic.putInt("id",success_id);
 
+        bundle_board.putInt("id", success_id);
         bundle_board.putString("user_id", success_user_id);
 
 

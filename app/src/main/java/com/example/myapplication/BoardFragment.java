@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,8 +34,9 @@ public class BoardFragment extends Fragment {
     RecyclerView recyclerView;
     BoardRecyclerAdapter adapter;
 
-    private String user_id;
-    Button reg_button;
+    private String user_id; // user테이블 user_id
+    int id; // user테이블 id
+    FloatingActionButton reg_button;
 
     private final String TAG = BoardFragment.class.getSimpleName();
     // 서버 url
@@ -45,13 +48,14 @@ public class BoardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        View v = inflater.inflate(R.layout.activity_list_board, container, false);
+        View v = inflater.inflate(R.layout.fragment_board, container, false);
 
         initMyAPI(BASE_URL);
 
-        reg_button = v.findViewById(R.id.reg_button);
+        reg_button = v.findViewById(R.id.fab_btn_boardFragment);
 
         Bundle bundle = getArguments(); // 메인액티비티2 에서 전달받은 번들 저장
+        id = bundle.getInt("id",0);
         user_id = bundle.getString("user_id", "x"); // 사용자 아이디
 
         dataInfo = new ArrayList<>();
@@ -92,7 +96,7 @@ public class BoardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), RegisterActivity_board.class);
-                intent.putExtra("user_id", user_id); // 사용자 아이디 (string)
+                intent.putExtra("id", id); // 사용자 id (int)
                 startActivity(intent);
             }
         });

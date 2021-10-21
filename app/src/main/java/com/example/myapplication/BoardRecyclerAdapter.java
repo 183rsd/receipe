@@ -58,12 +58,9 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
 
     @Override
     public void onBindViewHolder(@NonNull BoardRecyclerAdapter.BoardViewHolder holder, int position) {
-        // Item을 하나하나 보여주는(bind 되는) 함수입니다.
 
+        holder.tv_post_no.setText(""+dataList.get(position).getId());
         holder.tv_title.setText(""+dataList.get(position).getPost_title());
-//        holder.tv_user_id.setText(""+dataList.get(position).getUser_id());
-//        holder.tv_user_id.setText("111");
-
 
     }
 
@@ -92,6 +89,7 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
         TextView tv_title;
         ImageView iv_board_img;
         TextView tv_user_id;
+        TextView tv_post_no;
 
         public BoardViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -99,6 +97,7 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
             tv_title = (TextView) itemView.findViewById(R.id.tv_board_title);
 //            iv_board_img = itemView.findViewById(R.id.iv_board_img);
             tv_user_id = (TextView) itemView.findViewById(R.id.tv_board_userid);
+            tv_post_no = (TextView) itemView.findViewById(R.id.tv_board_no);
         }
     }
 

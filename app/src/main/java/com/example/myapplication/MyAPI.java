@@ -58,10 +58,7 @@ public interface MyAPI {
 
     @Multipart // retrofit2으로 파일을 전송할 때는 Multipart를 써야함
     @POST("/post/create/") // 게시글 POST (사진포함)
-    Call<contentData> post_list(@PartMap HashMap<String, RequestBody> data, @Part MultipartBody.Part file);
-//    @HTTP(method = "POST", path = "/post/create/", hasBody = true) // 게시물 등록
-//    Call<contentData> post_list(@Body contentData post);
-
+    Call<postcreateData> post_list(@PartMap HashMap<String, RequestBody> data, @Part MultipartBody.Part file);
 
     @FormUrlEncoded
     @GET("/post/{pn}")

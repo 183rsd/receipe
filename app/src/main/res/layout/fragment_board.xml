@@ -1,25 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".BoardFragment">
-    <Button
-        android:id="@+id/reg_button"
+
+    <TextView
+        android:id="@+id/boardFragement_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#C62828"
-        android:textColor="#FFFFFF"
-        android:text="새 글 작성하기"
-        />
+        android:text="레시피 공유 게시판"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textColor="@color/black"
+        tools:ignore="MissingConstraints" />
+
+
     <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_board"
         android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+               android:background="@drawable/food_list"
         android:scrollbars="vertical"
         android:scrollbarFadeDuration="0"
-        />
-</LinearLayout>
+        android:layout_below="@id/boardFragement_tv"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fab_btn_boardFragment"
+        android:src="@drawable/ic_action_name"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="50dp"
+        tools:ignore="MissingConstraints" />
+</RelativeLayout>

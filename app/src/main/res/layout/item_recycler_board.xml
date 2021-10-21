@@ -6,7 +6,6 @@
     android:layout_marginLeft="15dp"
     android:layout_marginRight="15dp"
     android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
     android:gravity="center_vertical"
     android:background="#fff"
     >
@@ -17,7 +16,16 @@
         android:layout_weight="1"
         android:orientation="horizontal"
         android:layout_gravity="center_vertical">
-
+        <TextView
+            android:id="@+id/tv_board_no"
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/black"
+            android:text="No"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="10sp" />
         <TextView
             android:id="@+id/tv_board_title"
             android:layout_width="0dp"
@@ -27,17 +35,17 @@
             android:textColor="@color/black"
             android:text="title"
             android:gravity="center_vertical|center_horizontal"
-            android:textSize="20sp" />
+            android:textSize="10sp" />
         <TextView
             android:id="@+id/tv_board_userid"
             android:layout_width="0dp"
-            android:layout_weight="0.3"
+            android:layout_weight="0.2"
             android:layout_height="match_parent"
             android:fontFamily="@font/regular"
             android:textColor="@color/colorGray"
             android:text="user_id"
             android:gravity="center_vertical|center_horizontal"
-            android:textSize="20sp" />
+            android:textSize="10sp" />
 
 
     </LinearLayout>
