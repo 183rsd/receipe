@@ -12,6 +12,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
@@ -50,6 +51,34 @@ public interface MyAPI {
     Call<pictureData> get_rec_name(@Path(value = "pic_list", encoded = false) String pic_list);
 
 //    @GET("/recipe/detail/{pk}")
+
+
+    @GET("/allpost/") //전체 게시물 조회
+    Call<TestItem> get_allpost();
+
+    @Multipart // retrofit2으로 파일을 전송할 때는 Multipart를 써야함
+    @POST("/post/create/") // 게시글 POST (사진포함)
+    Call<contentData> post_list(@PartMap HashMap<String, RequestBody> data, @Part MultipartBody.Part file);
+//    @HTTP(method = "POST", path = "/post/create/", hasBody = true) // 게시물 등록
+//    Call<contentData> post_list(@Body contentData post);
+
+
+    @FormUrlEncoded
+    @GET("/post/{pn}")
+    Call<ListResponse> patch_list(@Path("pn") int pn,
+                                  @Field("user_id") String user_id,
+                                  @Field("post_content") String post_content,
+                                  @Field("post_title") String post_title);
+    @FormUrlEncoded
+    @GET("/post/{pk}/allreply")
+    Call<ListResponse> get_allReply(@Path("pk") int pk,
+                                    @Field("reply_no") String reply_no,
+                                    @Field("reply_content") String reply_content);
+    @FormUrlEncoded
+    @GET("/post/{pn}/reply/{rn}")
+    Call<ListResponse> post_reply(@Path("pn") int pn, @Path("rn") int rn,
+                                  @Field("user_id") String user_id,
+                                  @Field("reply_content") String reply_content);
 
 
 }

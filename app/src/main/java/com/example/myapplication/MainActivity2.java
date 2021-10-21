@@ -8,15 +8,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -27,6 +21,7 @@ public class MainActivity2 extends AppCompatActivity  {
     public int success_id, success_age, success_sex;
     Bundle bundle = new Bundle(); // 프로필로 가는 번들
     Bundle bundle_pic = new Bundle(); // 레시피로 가는 번들
+    Bundle bundle_board = new Bundle(); // 게시판으로 가는 번들
     private BackPressHandler backPressHandler = new BackPressHandler(this);
 
 
@@ -51,6 +46,8 @@ public class MainActivity2 extends AppCompatActivity  {
 
 
         bundle_pic.putInt("id",success_id);
+
+        bundle_board.putString("user_id", success_user_id);
 
 
 
@@ -86,7 +83,8 @@ public class MainActivity2 extends AppCompatActivity  {
             } else if (id == R.id.menu_list){
                 fragment = new ListFragment();
             } else {
-                fragment = new RankFragment();
+                fragment = new BoardFragment();
+                fragment.setArguments(bundle_board);
             }
             fragmentTransaction.add(R.id.fragment_main, fragment, tag);
 

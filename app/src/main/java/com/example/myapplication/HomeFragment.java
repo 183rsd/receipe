@@ -224,9 +224,6 @@ public class HomeFragment extends Fragment {
         intent.setType("image/*");
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, PICK_FROM_ALBUM);
-
-
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

@@ -26,6 +26,7 @@
         tools:ignore="UnusedAttribute">
         <activity android:name=".RecipeActivity"></activity>
         <activity android:name=".PostActivity" />
+        <activity android:name=".RegisterActivity_board"/>
         <activity android:name=".MainActivity2" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
