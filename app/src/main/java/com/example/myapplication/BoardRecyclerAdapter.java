@@ -61,6 +61,14 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
 
         holder.tv_post_no.setText(""+dataList.get(position).getId());
         holder.tv_title.setText(""+dataList.get(position).getPost_title());
+        holder.tv_user_id.setText(""+dataList.get(position).getUser_name());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() { // 리사이클러뷰 클릭하여 각 항목의 데이터 추출하는 방법.
+            @Override
+            public void onClick(View view) {
+                int id = Integer.parseInt(holder.tv_post_no.getText().toString()); // 각 항목의 tv_post_no 텍스트뷰에 적힌 값을 int로 받아옴.
+            }
+        });
 
     }
 
@@ -98,6 +106,16 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
 //            iv_board_img = itemView.findViewById(R.id.iv_board_img);
             tv_user_id = (TextView) itemView.findViewById(R.id.tv_board_userid);
             tv_post_no = (TextView) itemView.findViewById(R.id.tv_board_no);
+            itemView.setClickable(true);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = getBindingAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION) {
+
+                    }
+                }
+            });
         }
     }
 

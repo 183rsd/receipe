@@ -97,6 +97,7 @@ public class BoardFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), RegisterActivity_board.class);
                 intent.putExtra("id", id); // 사용자 id (int)
+                intent.putExtra("user_id",user_id); // 사용자 id (string)
                 startActivity(intent);
             }
         });

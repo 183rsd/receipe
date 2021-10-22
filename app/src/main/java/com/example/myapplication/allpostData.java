@@ -12,6 +12,8 @@ public class allpostData {
     public int id;
     @SerializedName("post_no")
     public int post_no;
+    @SerializedName("user_name")
+    public String user_name;
     @SerializedName("post_title")
     public String post_title;
     @SerializedName("post_content")
@@ -22,6 +24,7 @@ public class allpostData {
 
     public int getPost_no(){return post_no;}
     public int getId() { return id; }
+    public String getUser_name(){return user_name;}
     public String getPost_content(){return post_content;}
     public String getPost_title() {
         return post_title;
@@ -36,6 +39,7 @@ public class allpostData {
         this.post_no = post_no;
     }
     public void setId(int id) { this.id = id; }
+    public void setUser_name(String user_name){this.user_name = user_name;}
     public void setPost_title(String post_title) {
         this.post_title = post_title;
     }
