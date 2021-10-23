@@ -1,9 +1,11 @@
 package com.example.myapplication;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.fragment.app.Fragment;
@@ -50,6 +52,10 @@ public class BoardFragment extends Fragment {
         setHasOptionsMenu(true);
         View v = inflater.inflate(R.layout.fragment_board, container, false);
 
+
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        ft.detach(this).attach(this).commit();
+
         initMyAPI(BASE_URL);
 
         reg_button = v.findViewById(R.id.fab_btn_boardFragment);
@@ -58,12 +64,47 @@ public class BoardFragment extends Fragment {
         id = bundle.getInt("id",0);
         user_id = bundle.getString("user_id", "x"); // 사용자 아이디
 
-        dataInfo = new ArrayList<>();
-        recyclerView = v.findViewById(R.id.recyclerview_board);
 
+
+
+        recyclerView = v.findViewById(R.id.recyclerview_board);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
+        get_allpost(); // onCreateView(fragment의 생명주기 초기 단계)에서 통신 함수 실행
+
+
+        // 글 작성하기 버튼 클릭 시
+        reg_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), RegisterActivity_board.class);
+                intent.putExtra("id", id); // 사용자 id (int)
+                intent.putExtra("user_id",user_id); // 사용자 id (string)
+                startActivity(intent);
+            }
+        });
+
+
+        return v;
+
+    }
+    @Override
+    public void onResume(){
+        // fragment에서 다른 액티비티를 호출한 뒤 다시 돌아오면, onResume()함수가 실행됨.
+        // 자세한건 activity와 fragment의 생명주기 참조!
+        // 따라서 registerActivity_board에서 게시글 등록하고 finish()로 빠져나오면(다시 mainAcitivity2로 돌아옴), 이 함수 실행
+        // get_allpost()함수를 다시 실행해서 서버와 통신함
+        super.onResume();
+        get_allpost();
+    }
+
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    public void get_allpost(){
+        dataInfo = new ArrayList<>();
         Call<TestItem> call = mMyAPI.get_allpost();
         call.enqueue(new Callback<TestItem>() {
             @Override
@@ -76,6 +117,9 @@ public class BoardFragment extends Fragment {
 
                     adapter = new BoardRecyclerAdapter(getActivity(), dataInfo);
                     recyclerView.setAdapter(adapter);
+
+                    // 데이터가 갱신되었음을 어댑터에 알림 (변경사항이 없어도 알림)
+                    adapter.notifyDataSetChanged();
                 }
                 else {
                     Toast.makeText(getActivity(),"response.isNotSuccessful",Toast.LENGTH_LONG).show();
@@ -91,26 +135,30 @@ public class BoardFragment extends Fragment {
                 Toast.makeText(getActivity(),t.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
-        // 글 작성하기 버튼 클릭 시
-        reg_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), RegisterActivity_board.class);
-                intent.putExtra("id", id); // 사용자 id (int)
-                intent.putExtra("user_id",user_id); // 사용자 id (string)
-                startActivity(intent);
-            }
-        });
-
-
-
-        return v;
-
     }
 
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+//        super.onActivityResult(requestCode, resultCode, data);
+//        try{
+//            FragmentTransaction ft = getFragmentManager().beginTransaction();
+//            if(Build.VERSION.SDK_INT >= 26){
+//                ft.setReorderingAllowed(false);
+//            }
+//            ft.detach(this).attach(this).commit();
+//        }catch (Exception e){
+//
+//        }
+//    }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//
+//
+//
+//    }
 
     private void initMyAPI(String baseUrl){
         Log.d(TAG,"initMyAPI : " + baseUrl);

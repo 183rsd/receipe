@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -23,6 +24,9 @@ public class MainActivity2 extends AppCompatActivity  {
     Bundle bundle_pic = new Bundle(); // 레시피로 가는 번들
     Bundle bundle_board = new Bundle(); // 게시판으로 가는 번들
     private BackPressHandler backPressHandler = new BackPressHandler(this);
+
+    BoardFragment boardFragment = new BoardFragment();
+
 
 
     @Override
@@ -62,6 +66,8 @@ public class MainActivity2 extends AppCompatActivity  {
             }
         });
         mBottomNV.setSelectedItemId(R.id.menu_home);
+
+
     }
     private void BottomNavigate(int id){
         String tag = String.valueOf(id);
@@ -103,6 +109,28 @@ public class MainActivity2 extends AppCompatActivity  {
     public void onBackPressed(){
         backPressHandler.onBackPressed("'뒤로' 버튼 한번 더 누르시면 종료됩니다.",3000);
     }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+    }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(requestCode == 555){
+//            if(data!=null){
+//                BoardFragment fragment = null;
+//                fragment.onActivityResult(requestCode, resultCode, data);
+//            }
+//        }
+//    }
 
 }
 

@@ -116,7 +116,7 @@ public class RegisterActivity_board extends AppCompatActivity {
         reg_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(pic_regist_success = false){
+                if(!pic_regist_success){ // 사진 등록 안하면 게시글 등록 불가
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity_board.this);
                     dialog = builder.setMessage("사진을 등록해주세요.").setNegativeButton("확인", null).create();
                     dialog.show();
@@ -148,7 +148,7 @@ public class RegisterActivity_board extends AppCompatActivity {
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     bitmap2.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
                     RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray());
-                    uploadFile = MultipartBody.Part.createFormData("post_img",send_file.getName(),requestBody);
+                    uploadFile = MultipartBody.Part.createFormData("post_img",send_file.getName(),requestBody); // name(key)값은 서버에서 설정해준 키값과 동일하게 해야함
 
 
                     if(uploadFile!=null){
@@ -160,8 +160,16 @@ public class RegisterActivity_board extends AppCompatActivity {
 
                                     Log.d(TAG, "게시글 등록성공");
                                     Toast.makeText(RegisterActivity_board.this, "게시글이 등록되었습니다.",Toast.LENGTH_SHORT).show();
+                                    finish();
 
 
+//                                    BoardRecyclerAdapter adapter = null;
+//                                    adapter.notifyDataSetChanged();
+
+//                                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                                    Fragment fragment1 = new BoardFragment();
+//                                    ft.replace(R.id.)
+//
 //                                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 //                                    // 프래그먼트매니저를 통해 사용
 //                                    Fragment fragment1= new Fragment(); // 객체 생성

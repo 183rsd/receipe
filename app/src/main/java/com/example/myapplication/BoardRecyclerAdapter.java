@@ -59,9 +59,10 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
     @Override
     public void onBindViewHolder(@NonNull BoardRecyclerAdapter.BoardViewHolder holder, int position) {
 
-        holder.tv_post_no.setText(""+dataList.get(position).getId());
-        holder.tv_title.setText(""+dataList.get(position).getPost_title());
-        holder.tv_user_id.setText(""+dataList.get(position).getUser_name());
+//        holder.tv_post_no.setText(""+dataList.get(position).getId());
+//        holder.tv_title.setText(""+dataList.get(position).getPost_title());
+//        holder.tv_user_id.setText(""+dataList.get(position).getUser_name());
+        holder.onBind(dataList.get(position));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() { // 리사이클러뷰 클릭하여 각 항목의 데이터 추출하는 방법.
             @Override
@@ -117,6 +118,14 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
                 }
             });
         }
+
+
+        void onBind(allpostData data){
+            tv_post_no.setText(""+data.getId());
+            tv_title.setText(""+data.getPost_title());
+            tv_user_id.setText(""+data.getUser_name());
+        }
+
     }
 
 
