@@ -20,6 +20,8 @@ public class allpostData {
     public String post_content;
     @SerializedName("post_img") // 게시글 등록 시 필요한 이미지 파일
     public String post_img_file;
+    @SerializedName("img_string") // 게시글 등록 시 필요한 이미지 파일
+    public String img_string;
 
 
     public int getPost_no(){return post_no;}
@@ -32,6 +34,7 @@ public class allpostData {
     public String getPost_img_file() {
         return post_img_file;
     }
+    public String getImg_string(){return img_string;}
 
 
     public void setPost_content(String post_content) { this.post_content = post_content; }
@@ -46,5 +49,6 @@ public class allpostData {
     public void setPost_img_file(String post_img_file) {
         this.post_img_file = post_img_file;
     }
+    public void setImg_string(String img_string) {this.img_string = img_string;}
 
 }

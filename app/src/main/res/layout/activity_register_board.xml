@@ -24,18 +24,11 @@
             android:hint="제목을 입력하세요."
             />
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="내용"/>
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,33 +38,42 @@
             android:id="@+id/iv_register_board"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/food_upload"/>
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_register_board"
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/solid_button"
-            android:fontFamily="@font/regular"
-            android:text="사진 등록"/>
+            android:src="@drawable/add_gallery"
+            android:layout_marginLeft="10dp"/>
+<!--        <androidx.appcompat.widget.AppCompatButton-->
+<!--            android:id="@+id/btn_register_board"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:layout_marginRight="10dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/solid_button"-->
+<!--            android:fontFamily="@font/regular"-->
+<!--            android:text="사진 등록"/>-->
     </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="내용"/>
 
     <EditText
         android:id="@+id/content_et"
         android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scrollbars="vertical"
         android:layout_weight="1"
         android:background="#eeeeee"
         android:hint="내용을 입력하세요."
         />
-    <Button
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/reg_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="등록하기"
         android:textColor="#FFFFFF"
-        android:background="#C62828"/>
+        android:background="#4C4747"
+        android:layout_marginTop="10dp"/>
 </LinearLayout>

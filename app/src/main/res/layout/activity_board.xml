@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
     android:padding="16dp"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <ScrollView
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:fillViewport="true">
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
                     android:text="제목"/>
+
                 <TextView
                     android:id="@+id/title_tv"
                     android:padding="16dp"
@@ -36,52 +44,71 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
-                    android:text="아이디"/>
+                    android:text="작성자"/>
+
                 <TextView
-                    android:id="@+id/date_tv"
+                    android:id="@+id/userid_tv"
                     android:padding="16dp"
                     android:background="#eeeeee"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="제목입니다."
+                    android:text="아이디입니다."
                     />
+
+
+
             </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
                 android:text="내용"/>
+
+            <ImageView
+                android:id="@+id/content_pic_tv"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/food_upload"/>
             <TextView
                 android:id="@+id/content_tv"
                 android:padding="16dp"
-                android:background="#eeeeee"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="내용입니다."
                 />
+
             <TextView
-                android:padding="16dp"
+                android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="댓글"
+                android:background="#eeeeee"
                 />
-            <LinearLayout
-                android:id="@+id/comment_layout"
+
+            <!-- TODO: Update blank fragment layout -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_reply"
+                android:layout_margin="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:orientation="vertical"/>
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                android:scrollbarFadeDuration="0"
+                />
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <EditText
             android:id="@+id/comment_et"
             android:layout_width="match_parent"
@@ -90,11 +117,12 @@
             android:background="#eeeeee"
             android:layout_weight="1"
             android:hint="댓글 내용을 입력하세요"/>
-        <Button
-            android:id="@+id/reg_button"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/post_reply_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="8dp"
-            android:text="등록하기"/>
+            android:background="#CABDBD"
+            android:text="등록"/>
     </LinearLayout>
 </LinearLayout>

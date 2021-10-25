@@ -14,18 +14,62 @@
         android:textSize="30sp"
         android:textColor="@color/black"
         tools:ignore="MissingConstraints" />
+    <LinearLayout
+        android:id="@+id/boardFragment_low"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_below="@id/boardFragement_tv">
+        <TextView
+            android:id="@+id/tv_board_no"
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/black"
+            android:text="No"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tv_board_title"
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/black"
+            android:text="제목"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tv_board_userid"
+            android:layout_width="0dp"
+            android:layout_weight="0.2"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/black"
+            android:text="작성자"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="15sp" />
+    </LinearLayout>
 
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_board"
-        android:layout_margin="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-               android:background="@drawable/food_list"
+        android:background="@drawable/food_list"
         android:scrollbars="vertical"
         android:scrollbarFadeDuration="0"
-        android:layout_below="@id/boardFragement_tv"/>
+        android:layout_below="@id/boardFragment_low">
+    </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"

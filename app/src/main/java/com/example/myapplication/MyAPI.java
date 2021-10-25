@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -10,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
@@ -60,22 +62,19 @@ public interface MyAPI {
     @POST("/post/create/") // 게시글 POST (사진포함)
     Call<postcreateData> post_list(@PartMap HashMap<String, RequestBody> data, @Part MultipartBody.Part file);
 
-    @FormUrlEncoded
-    @GET("/post/{pn}")
-    Call<ListResponse> patch_list(@Path("pn") int pn,
-                                  @Field("user_id") String user_id,
-                                  @Field("post_content") String post_content,
-                                  @Field("post_title") String post_title);
-    @FormUrlEncoded
-    @GET("/post/{pk}/allreply")
-    Call<ListResponse> get_allReply(@Path("pk") int pk,
-                                    @Field("reply_no") String reply_no,
-                                    @Field("reply_content") String reply_content);
-    @FormUrlEncoded
-    @GET("/post/{pn}/reply/{rn}")
-    Call<ListResponse> post_reply(@Path("pn") int pn, @Path("rn") int rn,
-                                  @Field("user_id") String user_id,
-                                  @Field("reply_content") String reply_content);
 
+    @GET("/post/{id}/")
+    Call<allpostData> get_board_list(@Path(value = "id") int id);
+
+
+    @GET("/post/{post_no}/allreply/")
+    Call<TestItem_reply> get_allReply(@Path(value = "post_no", encoded = false) int post_no);
+
+//    @Multipart
+//    @POST("/post/{post_no}/reply/")
+//    Call<postReply> post_reply(@Path(value = "post_no", encoded = false) int post_no, @PartMap HashMap<String, RequestBody> data);
+
+    @POST("/post/{post_no}/reply/")
+    Call<postReply> post_reply(@Path(value = "post_no") int post_no, @Body postReply postReply);
 
 }

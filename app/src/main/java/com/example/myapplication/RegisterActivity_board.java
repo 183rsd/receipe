@@ -13,6 +13,7 @@ package com.example.myapplication;
         import android.database.Cursor;
         import android.graphics.Bitmap;
         import android.graphics.BitmapFactory;
+        import android.graphics.Rect;
         import android.net.Uri;
         import android.os.AsyncTask;
         import android.os.Build;
@@ -20,7 +21,9 @@ package com.example.myapplication;
         import android.os.Handler;
         import android.provider.MediaStore;
         import android.util.Log;
+        import android.view.MotionEvent;
         import android.view.View;
+        import android.view.inputmethod.InputMethodManager;
         import android.widget.Button;
         import android.widget.EditText;
         import android.widget.ImageView;
@@ -97,12 +100,12 @@ public class RegisterActivity_board extends AppCompatActivity {
         title_et = findViewById(R.id.title_et);
         content_et = findViewById(R.id.content_et);
         reg_button = findViewById(R.id.reg_button);
-        btn_register_board = findViewById(R.id.btn_register_board);
+//        btn_register_board = findViewById(R.id.btn_register_board);
         imageView = findViewById(R.id.iv_register_board);
         initMyAPI(BASE_URL);
 
         // 사진 등록 버튼
-        btn_register_board.setOnClickListener(new View.OnClickListener() {
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
@@ -242,25 +245,8 @@ public class RegisterActivity_board extends AppCompatActivity {
                 .build();
         mMyAPI = retrofit.create(MyAPI.class);
     }
-    // 사진 uri 값을 통해 상대경로 추출
-    public static String UriToPath(Context mContext,Uri photoUri){
-        Cursor cursor = null;
-        String[] proj = {MediaStore.Images.Media.DATA};
 
-        assert photoUri != null;
-        cursor = mContext.getContentResolver().query(photoUri, proj, null, null, null);
-
-        assert cursor != null;
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
-        cursor.moveToFirst();
-
-        @SuppressLint("Range") String path = cursor.getString(column_index);
-        Uri uri1 = Uri.fromFile(new File(path));
-
-        cursor.close();
-        return path;
-    }
+    // uri를 통해 절대경로 추출
     private String getRealPathFromURI(Uri contentUri) {
         int column_index=0;
         String[] proj = {MediaStore.Images.Media.DATA};
@@ -270,6 +256,23 @@ public class RegisterActivity_board extends AppCompatActivity {
         }
 
         return cursor.getString(column_index);
+    }
+
+    // 화면 터치 시 키보드 내려감
+    public boolean dispatchTouchEvent(MotionEvent ev){
+        View focusView = getCurrentFocus();
+        if(focusView != null){
+            Rect rect = new Rect();
+            focusView.getGlobalVisibleRect(rect);
+            int x = (int) ev.getX(), y = (int) ev.getY();
+            if(!rect.contains(x,y)){
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if (imm != null)
+                    imm.hideSoftInputFromWindow(focusView.getWindowToken(), 0);
+                focusView.clearFocus();
+            }
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
 
