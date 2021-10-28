@@ -4,10 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F3E5D0"
+    android:background="#418D81"
     tools:context=".MainActivity">
 
-
+    <ImageView
+        android:id="@+id/profile_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/logo"
+        android:adjustViewBounds="true"
+        android:layout_gravity="center" />
     <EditText
         android:id="@+id/et_id"
         android:layout_width="wrap_content"
@@ -68,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:layout_marginLeft="20dp"
-            android:background="@drawable/solid_button"
+            android:background="@drawable/solid_button_orange"
             android:fontFamily="@font/regular"
             android:text="회원가입"
             app:layout_constraintEnd_toEndOf="@+id/btn_login"

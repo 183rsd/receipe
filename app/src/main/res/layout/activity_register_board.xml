@@ -74,6 +74,6 @@
         android:layout_height="wrap_content"
         android:text="등록하기"
         android:textColor="#FFFFFF"
-        android:background="#4C4747"
+        android:background="#418D81"
         android:layout_marginTop="10dp"/>
 </LinearLayout>

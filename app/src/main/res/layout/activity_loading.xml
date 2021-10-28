@@ -3,14 +3,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#418D81"
     android:paddingLeft="18dp"
     android:paddingRight="18dp">
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="로딩화면"
-        android:layout_marginTop="300dp"
-        android:textSize="70sp"
-        android:layout_gravity="center|center_horizontal|center_vertical"/>
+        android:layout_gravity="center"
+        android:src="@drawable/icon"/>
 
 </LinearLayout>

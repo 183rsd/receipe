@@ -3,17 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F3E5D0"
+    android:background="#FAF7F3"
     tools:context=".BoardFragment">
 
     <TextView
         android:id="@+id/boardFragement_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="레시피 공유 게시판"
+        android:text="게시판"
         android:gravity="center"
-        android:textSize="30sp"
+        android:textSize="50sp"
         android:textColor="@color/black"
+        android:fontFamily="@font/badal"
         tools:ignore="MissingConstraints" />
     <LinearLayout
         android:id="@+id/boardFragment_low"

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#418D81"
     tools:context=".RecipeActivity">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,9 +16,9 @@
             android:layout_height="wrap_content"
             android:text="rec_name"
             android:textStyle="bold"
-            android:textSize="30sp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/regular"
+            android:textSize="50sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/badal"
             android:layout_marginTop="30dp"
             android:layout_centerHorizontal="true"/>
 
@@ -26,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="rec_ingre"
-            android:textColor="@color/colorGray"
+            android:textColor="@color/white"
             android:fontFamily="@font/regular"
             android:layout_centerHorizontal="true"
             android:layout_margin="10dp"
@@ -37,8 +38,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_below="@id/tv_rec_ingre"
-            android:background="@drawable/food_list"
-            android:backgroundTint="#D6D1A1"
+            android:background="@drawable/recipe_text"
             android:layout_margin="20dp">
 
             <TextView

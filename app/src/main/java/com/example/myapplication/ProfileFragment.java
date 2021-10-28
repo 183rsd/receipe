@@ -87,7 +87,7 @@ public class ProfileFragment extends Fragment {
         else
             profile_sex = "알수없음";
 
-        tv_id.setText(profile_id+"님");
+        tv_id.setText(profile_id);
 
         tv_age.setText(profile_age+"세");
         tv_sex.setText(profile_sex);

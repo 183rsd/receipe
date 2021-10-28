@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F5F8F6"
+    android:background="#FAF7F3"
     tools:context=".RegisterActivity">
 
     <TextView
@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="회원가입"
-        android:fontFamily="@font/regular"
+        android:fontFamily="@font/badal"
         android:textColor="@color/black"
         android:textSize="50sp"
         android:layout_gravity="center|center_horizontal|center_vertical"
@@ -103,8 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/solid_button"
-            android:backgroundTint="#8BC34A"
+            android:background="@drawable/solid_button_orange"
             android:fontFamily="@font/regular"
             android:text="가입"
             android:layout_marginLeft="30dp"/>
