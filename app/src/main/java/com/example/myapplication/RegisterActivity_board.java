@@ -206,7 +206,7 @@ public class RegisterActivity_board extends AppCompatActivity {
 
         if (resultCode != Activity.RESULT_OK) {
 
-            Toast.makeText(this, "취소 되었습니다."+resultCode, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
 
             if(tempFile != null) {
                 if (tempFile.exists()) {

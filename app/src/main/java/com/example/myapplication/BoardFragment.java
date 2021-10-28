@@ -1,4 +1,6 @@
 package com.example.myapplication;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,8 +38,8 @@ public class BoardFragment extends Fragment {
     RecyclerView recyclerView;
     BoardRecyclerAdapter adapter;
 
-    private String user_id; // user테이블 user_id
-    int id; // user테이블 id
+    public String user_id; // user테이블 user_id
+    public int id; // user테이블 id
     FloatingActionButton reg_button;
 
     private final String TAG = BoardFragment.class.getSimpleName();
@@ -46,12 +48,12 @@ public class BoardFragment extends Fragment {
     private MyAPI mMyAPI;
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View v = inflater.inflate(R.layout.fragment_board, container, false);
-
 
 //        FragmentTransaction ft = getFragmentManager().beginTransaction();
 //        ft.detach(this).attach(this).commit();
@@ -89,15 +91,17 @@ public class BoardFragment extends Fragment {
         return v;
 
     }
+
+    // fragment에서 다른 액티비티를 호출한 뒤 다시 돌아오면, onResume()함수가 실행됨.
+    // 자세한건 activity와 fragment의 생명주기 참조!
+    // 따라서 registerActivity_board에서 게시글 등록하고 finish()로 빠져나오면(다시 mainAcitivity2로 돌아옴), 이 함수 실행
+    // get_allpost()함수를 다시 실행해서 서버와 통신함
     @Override
     public void onResume(){
-        // fragment에서 다른 액티비티를 호출한 뒤 다시 돌아오면, onResume()함수가 실행됨.
-        // 자세한건 activity와 fragment의 생명주기 참조!
-        // 따라서 registerActivity_board에서 게시글 등록하고 finish()로 빠져나오면(다시 mainAcitivity2로 돌아옴), 이 함수 실행
-        // get_allpost()함수를 다시 실행해서 서버와 통신함
         super.onResume();
         get_allpost();
     }
+
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -137,28 +141,6 @@ public class BoardFragment extends Fragment {
         });
     }
 
-
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
-//        super.onActivityResult(requestCode, resultCode, data);
-//        try{
-//            FragmentTransaction ft = getFragmentManager().beginTransaction();
-//            if(Build.VERSION.SDK_INT >= 26){
-//                ft.setReorderingAllowed(false);
-//            }
-//            ft.detach(this).attach(this).commit();
-//        }catch (Exception e){
-//
-//        }
-//    }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//
-//
-//
-//    }
 
     private void initMyAPI(String baseUrl){
         Log.d(TAG,"initMyAPI : " + baseUrl);

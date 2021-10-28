@@ -151,6 +151,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.view.menu.MenuView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -200,7 +201,7 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
             @Override
             public void onClick(View view) {
                 id = Integer.parseInt(holder.tv_post_no.getText().toString()); // 각 항목의 tv_post_no 텍스트뷰에 적힌 값을 int로 받아옴.
-
+                int int_user_id = ((MainActivity2) MainActivity2.mContext).success_id;
                 Call<allpostData> getCall = mMyAPI.get_board_list(id);
                 getCall.enqueue(new Callback<allpostData>() {
                     @Override
@@ -214,6 +215,7 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
                             String post_img_string= result.getImg_string();
 
                             Intent intent3 = new Intent(mContext, BoardActivity.class);
+                            intent3.putExtra("user_id",int_user_id);
                             intent3.putExtra("id", post_no);
                             intent3.putExtra("user_name", user_name);
                             intent3.putExtra("post_title", post_title);

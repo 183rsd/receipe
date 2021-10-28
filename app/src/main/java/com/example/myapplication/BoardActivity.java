@@ -43,13 +43,11 @@ public class BoardActivity extends AppCompatActivity {
     private MyAPI mMyAPI;
 
     TextView tv_title, tv_content, tv_id;
-    int rec_no;
+    int rec_no, user_id;
+    String user_name, rec_title, rec_content, rec_img;
     EditText et_reply;
     Button post_reply_bt;
     ImageView post_img;
-    RecyclerView recyclerView;
-
-    String user_name, rec_title, rec_content, rec_img;
     Bitmap pic_img;
 
     RecyclerView recyclerView_reply;
@@ -68,6 +66,7 @@ public class BoardActivity extends AppCompatActivity {
         initMyAPI(BASE_URL);
 
         Intent intent = getIntent();
+        user_id = intent.getIntExtra("user_id",1);
         rec_no = intent.getIntExtra("id", 1);
         user_name = intent.getStringExtra("user_name");
         rec_title = intent.getStringExtra("post_title");
@@ -109,14 +108,14 @@ public class BoardActivity extends AppCompatActivity {
                 else{
                     String content=et_reply.getText().toString();
 
-                    postReply postReply = new postReply(rec_no, 3, content);
+                    postReply postReply = new postReply(rec_no, user_id, content);
                     Call<postReply> post_reply = mMyAPI.post_reply(rec_no, postReply);
                     post_reply.enqueue(new Callback<postReply>() {
                         @Override
                         public void onResponse(Call<postReply> call, Response<postReply> response) {
                             if(response.isSuccessful()){
-                                Toast.makeText(BoardActivity.this, "댓글을 입력하였습니다", Toast.LENGTH_SHORT).show();
                                 get_allreply();
+                                et_reply.setText("");
                             }
                             else{
                                 Toast.makeText(BoardActivity.this, "응답실패 : "+response.code(), Toast.LENGTH_SHORT).show();

@@ -75,9 +75,6 @@ import static android.app.Activity.RESULT_OK;
 
 public class HomeFragment extends Fragment {
 
-    Button btnCamera;
-    Button btnGallery;
-//    Button btn_go_recipe;
     ImageView imageView;
     File file;
     int pic_user_id;
@@ -115,9 +112,6 @@ public class HomeFragment extends Fragment {
        initMyAPI(BASE_URL);
        initMyAPI_recipe(recipe_url);
 
-
-//        File sdcard = Environment.getExternalStorageDirectory();
-//        file = new File(sdcard, "capture.jpg");
 
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -232,7 +226,7 @@ public class HomeFragment extends Fragment {
 
         if (resultCode != Activity.RESULT_OK) {
 
-            Toast.makeText(getActivity(), "취소 되었습니다."+resultCode, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "취소 되었습니다.", Toast.LENGTH_SHORT).show();
 
             if(tempFile != null) {
                 if (tempFile.exists()) {
@@ -302,7 +296,7 @@ public class HomeFragment extends Fragment {
 
                                 }
                                 else{
-                                    Toast.makeText(getActivity(),"post 실패" ,Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(),"서버 점검 중" ,Toast.LENGTH_SHORT).show();
                                     customProgressDialog.dismiss();
                                     Log.d(TAG,"Status Code : " + response.code());
                                     Log.d(TAG,response.errorBody().toString());
@@ -314,7 +308,7 @@ public class HomeFragment extends Fragment {
                             @Override
                             public void onFailure(Call<pictureData> call, Throwable t) {
                                 Log.d(TAG,"Fail msg : " + t.getMessage());
-                                Toast.makeText(getActivity(),"서버 오류",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(),"서버 점검 중",Toast.LENGTH_SHORT).show();
                                 customProgressDialog.dismiss();
                             }
                         });
@@ -380,7 +374,7 @@ public class HomeFragment extends Fragment {
                                 Log.d(TAG,"Status Code : " + response.code());
                             }
                             else{
-                                Toast.makeText(getActivity(),"post 실패",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(),"서버 점검 중",Toast.LENGTH_LONG).show();
                                 customProgressDialog.dismiss();
                                 Log.d(TAG,"Status Code : " + response.code());
                                 Log.d(TAG,response.errorBody().toString());
@@ -392,7 +386,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onFailure(Call<pictureData> call, Throwable t) {
                             Log.d(TAG,"Fail msg : " + t.getMessage());
-                            Toast.makeText(getActivity(),"서버 오류",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(),"서버 점검 중",Toast.LENGTH_SHORT).show();
                             customProgressDialog.dismiss();
                         }
                     });
@@ -409,29 +403,6 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-//    private void recentImage() {
-//
-////        ImageResizeUtils.resizeFile(tempFile,tempFile,1280,isCamera);
-//
-//        BitmapFactory.Options options = new BitmapFactory.Options();
-//        Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
-//
-//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-////            Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-//        // 비트맵 크기 줄이기
-//        float scale = 1024 / (float) originalBm.getWidth();
-//        int image_w = (int) (originalBm.getWidth() * scale);
-//        int image_h = (int) (originalBm.getHeight() * scale);
-//
-//        Bitmap resize = Bitmap.createScaledBitmap(originalBm, image_w, image_h, true);
-//        resize.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-//        byte[] byteArray = stream.toByteArray();
-//
-//        Intent intent = new Intent(getActivity(), ResultActivity.class);
-//        intent.putExtra("image", byteArray);
-//        intent.putExtra("pic_user_id",pic_user_id);
-//        startActivity(intent);
-//    }
 
     private void photoDialogRadio(){
         final CharSequence[] PhotoModels = {"카메라로 촬영", "갤러리에서 선택"};
@@ -479,14 +450,6 @@ public class HomeFragment extends Fragment {
 
 
 
-    // 비트맵에서 uri 추출
-//    private Uri getImageUri(Context ctx, Bitmap bitmap){
-//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-//        String path = MediaStore.Images.Media.insertImage(ctx.getContentResolver(),bitmap,"Title",null);
-//        return Uri.parse(path);
-//    }
-
 
     // 사진 uri 값을 통해 상대경로 추출
     public static String UriToPath(Context mContext,Uri photoUri){
@@ -508,36 +471,6 @@ public class HomeFragment extends Fragment {
         return path;
     }
 
-    // uri로 절대경로
-//    public static String createCopyAndReturnRealPath(Context mContext, Uri uri){
-//        final ContentResolver contentResolver = mContext.getContentResolver();
-//
-//        if(contentResolver == null)
-//            return null;
-//
-//        String filePath = mContext.getApplicationInfo().dataDir + File.separator + System.currentTimeMillis(); // 파일경로
-//
-//        File file = new File(filePath);
-//        try {
-//            InputStream inputStream = contentResolver.openInputStream(uri);
-//            if(inputStream == null)
-//                return null;
-//
-//            OutputStream outputStream = new FileOutputStream(file);
-//            byte[] buf = new byte[1024];
-//            int len;
-//            while((len = inputStream.read(buf)) > 0){
-//                outputStream.write(buf,0,len);
-//                outputStream.close();
-//                inputStream.close();
-//            }
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return file.getAbsolutePath();
-//    }
 
     @Override
     public void onAttach(Context context) { // Fragment를 Activity에 attach할 때 호출.
@@ -547,19 +480,6 @@ public class HomeFragment extends Fragment {
         if(context instanceof Activity)
             activity = (Activity) context;
     }
-
-//    @SuppressLint("Range")
-//    public static Uri convertContentToFileUri(Context mContext, Uri uri) throws Exception {
-//        Cursor cursor = null;
-//        try {
-//            cursor = mContext.getContentResolver().query(uri, null, null, null, null);
-//            cursor.moveToNext();
-//            return Uri.fromFile(new File(cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DATA))));
-//        } finally {
-//            if(cursor != null)
-//                cursor.close();
-//        }
-//    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private String getRealPathFromURI(Uri contentUri) { // content uri를 절대경로로 변환

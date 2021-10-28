@@ -38,8 +38,10 @@ public class RegisterActivity extends AppCompatActivity {
     private int user_sex;
     private MyAPI mMyAPI;
     private RadioGroup radioGroup;
+    int radio_button_id;
     private Button btn_register, btn_check, btn_cancle_regi;
     private AlertDialog dialog;
+    RadioButton rb, rb1, rb2;
     private boolean validate = false; // 아이디 중복확인
     ArrayList<String> id_list = new ArrayList<String>(); // 아이디를 담을 리스트
 
@@ -53,8 +55,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         et_id = findViewById(R.id.et_id);
         et_pass = findViewById(R.id.et_pass);
-        radioGroup = findViewById(R.id.rg_group);
         et_age = findViewById(R.id.et_age);
+        radioGroup = findViewById(R.id.rg_group);
+        rb1 = findViewById(R.id.rg_btn1);
+        rb2 = findViewById(R.id.rg_btn2);
 
         btn_register = findViewById(R.id.btn_register);
 
@@ -65,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //한 칸이라도 입력 안했을 경우 ( 성별 제외 )
-                if (et_id.getText().toString().equals("") || et_pass.getText().toString().equals("") || et_age.getText().toString().equals("")) {
+                if (et_id.getText().toString().equals("") || et_pass.getText().toString().equals("") || et_age.getText().toString().equals("") || (!rb1.isChecked() && !rb2.isChecked())) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     dialog = builder.setMessage("모두 입력해주세요.").setNegativeButton("확인", null).create();
                     dialog.show();
@@ -80,8 +84,8 @@ public class RegisterActivity extends AppCompatActivity {
                 // 나이
                 data.setAge(Integer.parseInt(et_age.getText().toString()));
                 // 성별
-                int radio_button_id = radioGroup.getCheckedRadioButtonId(); // 선택된 라디오버튼의 id값
-                RadioButton rb = findViewById(radio_button_id);
+                radio_button_id = radioGroup.getCheckedRadioButtonId(); // 선택된 라디오버튼의 id값
+                rb = findViewById(radio_button_id);
                 if(rb.getText().equals("남"))
                     user_sex = 0;
                 else if(rb.getText().equals("여"))

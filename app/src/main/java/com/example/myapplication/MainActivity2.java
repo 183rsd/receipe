@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,8 +25,7 @@ public class MainActivity2 extends AppCompatActivity  {
     Bundle bundle_pic = new Bundle(); // 레시피로 가는 번들
     Bundle bundle_board = new Bundle(); // 게시판으로 가는 번들
     private BackPressHandler backPressHandler = new BackPressHandler(this);
-
-    BoardFragment boardFragment = new BoardFragment();
+    public static Context mContext; // boardRecyclerAdapter로 id(int)를 보내기 위해 작성
 
 
 
@@ -33,6 +33,8 @@ public class MainActivity2 extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        mContext = this;
 
         Intent intent = getIntent();
         success_id = intent.getIntExtra("id",0);
@@ -121,16 +123,6 @@ public class MainActivity2 extends AppCompatActivity  {
         super.onRestart();
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if(requestCode == 555){
-//            if(data!=null){
-//                BoardFragment fragment = null;
-//                fragment.onActivityResult(requestCode, resultCode, data);
-//            }
-//        }
-//    }
 
 }
 
